@@ -5,7 +5,7 @@
 用于快速搭建 library 的基础环境，使用 babel 进行编译， webpack 进行打包。
 
 ## 适用系统
-Linux 系统、 UNIX 系统
+Linux 、 UNIX 、 Windows
 
 ## 安装
 
@@ -21,17 +21,38 @@ yarn
 
 > 开发模式
 
+- Linux 、 UNIX
+
 ```bash
-npm run dev
+npm run dev 或者
+npm start
+```
+
+- Windows
+
+```bash
+npm start
 ```
 
 > 生产模式 
 
+- Linux 、 UNIX
+
 ```bash
-npm run build
+npm run build 或者
+npm run build:win
+```
+
+- Windows
+
+```bash
+npm run build:win
 ```
 
 > 清空打包
+
+- Linux 、 UNIX
+
 ```bash
 npm run clean
 ```
@@ -40,7 +61,7 @@ npm run clean
 ## 目录结构
 
 ```jsx
-  ├─ dist                  压缩 library
+  ├─ dist                  压缩 library.min.js
   ├─ example
   |  ├─ example.js         library 测试区
   |  ├─ index.js           开发模式入口

@@ -8,7 +8,9 @@
     "dev": "make dev",
     "build": "make build",
     "watch": "make watch",
-    "clean": "make clean"
+    "clean": "make clean",
+    "start": "webpack-dev-server --config webpack.dev.js --open",
+    "build:win": "webpack --progress --config webpack.prod.js && babel src --out-dir lib --no-comments && lessc src/index.less > lib/index.less"
   },
   "repository": {
     "type": "git",

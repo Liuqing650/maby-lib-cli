@@ -1,6 +1,7 @@
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
 BABEL=./node_modules/.bin/babel
+LESSC=./node_modules/.bin/lessc
 WEBPACK=./node_modules/.bin/webpack
 WEBPACK_DEV_SERVER=./node_modules/.bin/webpack-dev-server
 SOURCE=./src
@@ -12,13 +13,12 @@ dev:
 	@$(WEBPACK_DEV_SERVER) --config webpack.dev.js --open
 
 build:
-	@$(WEBPACK) --config webpack.prod.js
-	@mkdir -p $(LIB)
-	@cp -Rfv $(SOURCE)/index.less $(LIB)
+	@$(WEBPACK) --progress --config webpack.prod.js
 	@$(BABEL) src --out-dir lib
+	@$(LESSC) src/index.less > lib/index.less
 
 watch:
-	@$(WEBPACK_DEV_SERVER) --config webpack.dev.js --open
+	@$(WEBPACK) -p --progress --config webpack.dev.js --watch
 
 clean:
 	@if [ -d dist ]; then rm -r dist; fi
