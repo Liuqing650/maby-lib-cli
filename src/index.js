@@ -1,5 +1,6 @@
 import React from 'react';
-import './index.less';
+import NewCom from './test/new';
+import './style';
 
 class MabyLibCli extends React.Component {
   state = {
@@ -12,6 +13,7 @@ class MabyLibCli extends React.Component {
       <div>
         <div>{value}</div>
         <i>{sendMsg}</i>
+        <NewCom />
       </div>
     );
   };

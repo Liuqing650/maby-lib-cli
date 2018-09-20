@@ -1,7 +1,6 @@
 SPEC_FLAGS=-R spec
 COVERAGE_FLAGS=-R mocha-text-cov
-BABEL=./node_modules/.bin/babel
-LESSC=./node_modules/.bin/lessc
+GULP=./node_modules/.bin/gulp
 WEBPACK=./node_modules/.bin/webpack
 WEBPACK_DEV_SERVER=./node_modules/.bin/webpack-dev-server
 SOURCE=./src
@@ -9,13 +8,12 @@ LIB=./lib
 
 dev:
 	@mkdir -p $(LIB)
-	@cp -Rfv $(SOURCE)/* $(LIB)
+	# @cp -Rfv $(SOURCE)/* $(LIB)
 	@$(WEBPACK_DEV_SERVER) --config webpack.dev.js --open
 
 build:
 	@$(WEBPACK) --progress --config webpack.prod.js
-	@$(BABEL) src --out-dir lib
-	@$(LESSC) src/index.less > lib/index.less
+	@$(GULP)
 
 watch:
 	@$(WEBPACK) -p --progress --config webpack.dev.js --watch

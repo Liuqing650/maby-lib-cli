@@ -5,7 +5,7 @@ export default class Example extends Component {
     return (
       <div>
         <h2>maby-lib-cli</h2>
-        <MabyLibCli sendMsg="hello lib!" />
+        <MabyLibCli sendMsg="hello lib 5!" />
       </div>
     );
   }
