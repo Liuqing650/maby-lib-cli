@@ -5,13 +5,9 @@
   "main": "lib/index.js",
   "browser": "lib/index.js",
   "scripts": {
-    "dev": "make dev",
-    "build": "make build",
-    "watch": "make watch",
-    "clean": "make clean",
-    "start": "webpack-dev-server --config webpack.dev.js --open",
-    "gulp": "gulp",
-    "build:win": "webpack --progress --config webpack.prod.js && babel src --out-dir lib --no-comments && lessc src/index.less > lib/index.less"
+    "start": "better-npm-run start",
+    "build": "better-npm-run build && npm run gulp",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
@@ -32,10 +28,46 @@
     "url": "https://github.com/Liuqing650/maby-lib-cli/issues"
   },
   "homepage": "https://github.com/Liuqing650/maby-lib-cli#readme",
+  "betterScripts": {
+    "start": {
+      "command": "webpack-dev-server --progress --config webpack.config.js",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 10123
+      }
+    },
+    "build": {
+      "command": "webpack --config webpack.config.js",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 10125
+      }
+    },
+    "analyzer": {
+      "command": "webpack --json > stats.json --config webpack.config.js",
+      "env": {
+        "NODE_ENV": "production",
+        "ANALYZER": true,
+        "PORT": 3600
+      }
+    },
+    "preview": {
+      "command": "webpack --progress --config webpack.config.js",
+      "env": {
+        "NODE_ENV": "production",
+        "ASSET_PATH": "./",
+        "PREVIEW": true,
+        "PORT": 3356
+      }
+    }
+  },
   "devDependencies": {
+    "@babel/polyfill": "^7.0.0-beta.51",
+    "autodll-webpack-plugin": "0.3",
     "autoprefixer": "^8.6.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-import": "^1.6.3",
     "babel-plugin-react-transform": "^3.0.0",
@@ -47,34 +79,51 @@
     "babel-preset-es2015-webpack": "^6.4.3",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "better-npm-run": "^0.1.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
     "del": "^3.0.0",
     "eslint": "^4.14.0",
-    "eslint-loader": "^1.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-loader": "^2.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-less": "^3.5.0",
     "gulp-uglify": "^3.0.0",
-    "html-webpack-plugin": "^2.30.1",
-    "less": "^2.7.3",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.0.1",
     "less-loader": "^4.0.5",
     "less-plugin-npm-import": "^2.1.0",
     "lodash": "^4.17.4",
     "merge2": "^1.2.2",
     "postcss": "^6.0.23",
+    "postcss-loader": "^3.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "rimraf": "^2.6.2",
     "rucksack-css": "^1.0.2",
+    "start": "^5.1.0",
     "style-loader": "^0.19.1",
     "stylelint": "^8.4.0",
-    "stylelint-config-standard": "^18.0.0",
+    "stylelint-webpack-plugin": "^0.10.5",
     "through2": "^2.0.3",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "url-loader": "^1.0.1",
     "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^3.0.2",
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-runtime": "^6.26.0"
+  },
+  "mabel": {
+    "primary-color": "#fa8c16"
   }
 }

@@ -16,7 +16,6 @@ class MabyLibCli extends React.Component {
         <NewCom />
       </div>
     );
-  };
-
-};
+  }
+}
 export default MabyLibCli;

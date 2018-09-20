@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import MabyLibCli from 'src/index';
+import MabyLibCli from '../src/index';
+
 export default class Example extends Component {
   render() {
     return (

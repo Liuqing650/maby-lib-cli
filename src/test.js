@@ -7,7 +7,6 @@ class New extends React.Component {
         <h2>New</h2>
       </div>
     );
-  };
-
-};
+  }
+}
 export default New;
