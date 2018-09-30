@@ -36,40 +36,21 @@ npm start
 
 > 生产模式 
 
-- Linux 、 UNIX
-
 ```bash
-npm run build 或者
-npm run build:win
+npm run build
 ```
-
-- Windows
-
-```bash
-npm run build:win
-```
-
-> 清空打包
-
-- Linux 、 UNIX
-
-```bash
-npm run clean
-```
-
 
 ## 目录结构
 
 ```jsx
-  ├─ dist                  压缩 library.min.js
+  ├─ dist                   压缩文件 library.[version].min.js/library.[version].min.css
   ├─ example
-  |  ├─ example.js         library 测试区
-  |  ├─ index.js           开发模式入口
-  ├─ lib                   生产环境库
+  |  ├─ example.js          library 测试区
+  |  ├─ index.js            开发模式入口
+  ├─ lib                    生产环境库
   ├─ src
   |  ├─ index.js
   |  ├─ index.less
-  ├─ Makefile              系统操作脚本
-  ├─ webpack.dev.js        开发环境
-  ├─ webpack.prod.js       生产环境
+  ├─ webpack.config.js      webpack配置文件夹
+  ├─ gulpfile.js            gulp配置文件夹
 ```

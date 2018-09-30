@@ -8,9 +8,12 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const AutoDllPlugin = require('autodll-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = nodeEnv !== 'production';
+console.log('process.env.MINI------>', process.env.MINI);
+const isMINI = process.env.MINI === 'true';
 const ASSET_PATH = '/';
 const ANALYZER = process.env.ANALYZER || false;
 
@@ -49,12 +52,26 @@ const vendor = [
 
 console.log(isDev ? '开发模式' : '发布模式');
 
+
+// 获取文件输出名称
+const getOutFilename = (fileType) => {
+  if (isDev) {
+    return '[name].js';
+  }
+  const _version = version ? '.' + version : '';
+  const suffix = isMINI ? `.min.${fileType}` : `.${fileType}`;
+  const filename = `${libraryName}${_version}${suffix}`;
+  console.log('isMINI----->', isMINI);
+  console.log('filename----->', filename);
+  return filename;
+};
+
 // 设置插件环境 development/prodcution
 const getPlugins = () => {
   // Common
   const plugins = [
     new ExtractTextPlugin({
-      filename: `${libraryName}.${version}.css`,
+      filename: getOutFilename('css'),
       disable: isDev
     }),
     new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
@@ -82,21 +99,32 @@ const getPlugins = () => {
       new webpack.NamedModulesPlugin()
     );
   } else {
-    plugins.push(
-      new CleanWebpackPlugin(['dist']),
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          beautify: true, // 最紧凑的输出
-          comments: true, // 删除所有的注释
-          compress: {
-            warnings: false,
-            drop_console: !PREVIEW, // 删除所有的 `console` 语句
-            collapse_vars: true,
-            reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
+    if (!isMINI) {
+      plugins.push(new CleanWebpackPlugin(['dist']));
+    } else {
+      plugins.push(
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            beautify: true, // 最紧凑的输出
+            comments: true, // 删除所有的注释
+            compress: {
+              warnings: false,
+              drop_console: !PREVIEW, // 删除所有的 `console` 语句
+              collapse_vars: true,
+              reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
+            }
           }
-        }
-      }),
-    );
+        }),
+        new OptimizeCssAssetsPlugin({
+          assetNameRegExp: /\.css$/g,
+          cssProcessor: require('cssnano'),
+          cssProcessorPluginOptions: {
+            preset: ['default', { discardComments: { removeAll: true } }],
+          },
+          canPrint: true
+        })
+      );
+    }
   }
   if (isAutoDll) {
     plugins.push(
@@ -193,6 +221,7 @@ const webpackLoaders = () => {
   }
   return loaders;
 };
+
 module.exports = {
   name: 'client',
   target: 'web',
@@ -200,11 +229,11 @@ module.exports = {
   profile: isDev, // 是否捕捉 Webpack 构建的性能信息
   context: path.resolve(process.cwd()),
   entry: getEntry(),
-  devtool: isDev ? 'inline-source-map' : 'hidden-source-map',
+  devtool: isDev ? 'inline-source-map' : false,
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: ASSET_PATH,
-    filename: isDev ? '[name].js' : libraryName + '.' + version + '.min.js',
+    filename: getOutFilename('js'),
     pathinfo: isDev,
     library: libraryName,
     libraryTarget: 'umd',

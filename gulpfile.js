@@ -8,7 +8,7 @@ const uglify = require('gulp-uglify');
 const less = require('gulp-less');
 const babel = require('gulp-babel');
 const transformLess = require('./script/transformLess');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 
 const cwd = process.cwd();
 
@@ -28,6 +28,7 @@ function babelify(js, modules) {
     }))
     .pipe(through2.obj(function z(file, encoding, next) {
       this.push(file.clone());
+      // 查找包含style样式文件夹，替换掉原来引入的less为css
       if (file.path.match(/\/style\/index\.js/)) {
         const content = file.contents.toString(encoding);
         file.contents = Buffer.from(content
