@@ -3,23 +3,58 @@ const rimraf = require('rimraf');
 const path = require('path');
 const merge2 = require('merge2');
 const through2 = require('through2');
+const webpack = require('webpack');
 const gulp = require('gulp');
-const uglify = require('gulp-uglify');
-const less = require('gulp-less');
 const babel = require('gulp-babel');
 const transformLess = require('./script/transformLess');
-// const webpack = require('webpack');
 
 const cwd = process.cwd();
 
 const libDir = path.join(cwd, 'lib');
+const distDir = path.join(cwd, 'dist');
 
 function getFolders(dir) {
-    return fs.readdirSync(dir)
-      .filter(function(file) {
-        return fs.statSync(path.join(dir, file)).isDirectory();
-      });
+  return fs.readdirSync(dir)
+    .filter(function(file) {
+      return fs.statSync(path.join(dir, file)).isDirectory();
+    });
 }
+
+function buildWebpack(isMini = false) {
+  process.env.MINI = isMini;
+  process.env.NODE_ENV = 'production';
+  if (!isMini) {
+    rimraf.sync(distDir);
+  }
+  const createWebpackConfig = require(path.join(cwd, 'webpack.config.js'));
+  const webpackConfig = createWebpackConfig(process.env);
+  webpack(webpackConfig, (err) => {
+    if (err) {
+      console.error(err.stack || err);
+      if (err.details) {
+        console.error(err.details);
+      }
+      return;
+    }
+  });
+}
+
+function analyzer() {
+  process.env.ANALYZER = true;
+  process.env.NODE_ENV = 'production';
+  const createWebpackConfig = require(path.join(cwd, 'webpack.config.js'));
+  const webpackConfig = createWebpackConfig(process.env);
+  webpack(webpackConfig, (err) => {
+    if (err) {
+      console.error(err.stack || err);
+      if (err.details) {
+        console.error(err.details);
+      }
+      return;
+    }
+  });
+}
+
 
 function babelify(js, modules) {
   let stream = js.pipe(babel({
@@ -63,7 +98,6 @@ function compile(modules) {
     }))
     .pipe(gulp.dest(libDir));
   const assets = gulp.src(['src/**/*.@(png|svg)']).pipe(gulp.dest(libDir));
-  let error = 0;
   const source = [
     'src/**/*.js',
     'src/**/*.jsx'
@@ -74,8 +108,22 @@ function compile(modules) {
   return merge2([less, tsFilesStream, tsd, assets]);
 }
 
+gulp.task('analyzer', () => {
+  analyzer();
+});
+
+gulp.task('build:babel', (done) => {
+  buildWebpack(false, done);
+});
+
+gulp.task('build:mini', (done) => {
+  buildWebpack(true, done);
+});
+
 gulp.task('compile', () => {
   compile();
 });
 
-gulp.task('default', ['compile']);
+gulp.task('build', ['build:babel', 'build:mini', 'compile']);
+
+gulp.task('default', ['build:babel', 'build:mini', 'compile']);

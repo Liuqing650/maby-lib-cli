@@ -1,11 +1,10 @@
 import React from 'react';
-import './style';
 
 class New extends React.Component {
   render() {
     return (
-      <div className="test">
-        <h2>New 222</h2>
+      <div>
+        <h2>New</h2>
       </div>
     );
   }
