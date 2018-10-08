@@ -1,5 +1,5 @@
 import React from 'react';
-import NewCom from './test/new';
+import NewCom from './components/new';
 import './style';
 
 class MabyLibCli extends React.Component {

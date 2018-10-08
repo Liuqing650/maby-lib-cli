@@ -3,7 +3,8 @@ const { readFileSync } = require('fs');
 const path = require('path');
 const postcss = require('postcss');
 const NpmImportPlugin = require('less-plugin-npm-import');
-const postcssConfig = require('./postcssConfig');
+
+const postcssConfig = require(path.join(process.cwd(), 'postcssConfig.js'));
 
 function transformLess(lessFile, config = {}) {
   const { cwd = process.cwd() } = config;

@@ -1,6 +1,6 @@
 {
   "name": "maby-lib-cli",
-  "version": "v0.0.1",
+  "version": "0.0.1-beta.10",
   "description": "一个快速搭建 library 的基础环境。",
   "main": "lib/index.js",
   "browser": "lib/index.js",
@@ -9,8 +9,8 @@
   },
   "scripts": {
     "start": "better-npm-run start",
-    "analyzer": "gulp analyzer",
-    "build": "gulp build"
+    "publish": "gulp publish",
+    "postinstall": "node ./script/init.js"
   },
   "betterScripts": {
     "start": {
@@ -26,15 +26,21 @@
     "url": "git+https://github.com/Liuqing650/maby-lib-cli.git"
   },
   "keywords": [
+    "maby-lib",
     "maby-lib-cli",
     "maby"
   ],
   "author": "liuqing",
-  "license": "ISC",
+  "license": "MIT",
   "files": [
-    "dist/",
-    "lib/",
-    "CHANGELOG.md"
+    "bin/",
+    "script/",
+    "template/",
+    "gulpfile.js",
+    "package.json",
+    "webpack.config.js",
+    "CHANGELOG.md",
+    "README.md"
   ],
   "bugs": {
     "url": "https://github.com/Liuqing650/maby-lib-cli/issues"
@@ -58,6 +64,7 @@
     "babel-preset-es2015-webpack": "^6.4.3",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.26.0",
     "better-npm-run": "^0.1.1",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.17",
@@ -102,8 +109,6 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-runtime": "^6.26.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
