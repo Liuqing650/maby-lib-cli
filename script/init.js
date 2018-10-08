@@ -13,7 +13,7 @@ function addPackageCommand(pgc, projectPath) {
     build: 'maby-lib build',
     init: 'maby-lib init',
   });
-  fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify(pgc, null, 2));
+  fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pgc, null, 2));
 }
 
 function initCommand() {
