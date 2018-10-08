@@ -1,17 +1,22 @@
 # maby-lib-cli
 
+[![NPM](https://nodei.co/npm/maby-lib-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/maby-lib-cli/)
+
 ## 简介
 
 用于快速搭建 library 的基础环境，使用 babel 进行编译， webpack 进行打包。
 
+``` bash
+npm i maby-lib-cli --save-dev
+
+yarn add maby-lib-cli -D
+```
 
 ## 安装
 
-```bash
-npm install 
-```
+``` bash
+npm install
 
-```bash
 yarn
 ```
 
