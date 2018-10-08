@@ -48,11 +48,6 @@ const webpackPlugins = ({
       new StyleLintPlugin({ failOnError: stylelint }),
       new webpack.NamedModulesPlugin()
     );
-  } else if (isExistClean) {
-    console.log('clean...');
-    // plugins.push(new CleanWebpackPlugin(['dist'], {
-    //   root: process.cwd(),
-    // }));
   } else if (isMINI) {
     plugins.push(
       new UglifyJsPlugin({

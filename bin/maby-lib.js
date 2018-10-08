@@ -12,7 +12,7 @@ program
   .command('start')
   .description('start libary.')
   .action(() => {
-    require('../lib/devServer')();
+    require('../lib/devServer');
   });
 
 program

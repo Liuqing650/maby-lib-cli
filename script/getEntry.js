@@ -2,7 +2,7 @@
 const getEntry = ({isDev, libraryName, vendors}) => {
   if (isDev) {
     const output = {
-      index: `${process.cwd()}/example/index.js`,
+      index: [`${process.cwd()}/example/index.js`],
       [libraryName]: `${process.cwd()}/src/index.js`,
     };
     if (vendors) {

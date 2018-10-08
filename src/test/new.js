@@ -5,7 +5,7 @@ class New extends React.Component {
   render() {
     return (
       <div className="test">
-        <h2>New 222</h2>
+        <h2>New 2</h2>
       </div>
     );
   }

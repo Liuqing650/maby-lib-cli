@@ -1,6 +1,6 @@
 {
   "name": "maby-lib-cli",
-  "version": "0.0.1-beta.22",
+  "version": "0.0.1-beta.23",
   "description": "一个快速搭建 library 的基础环境。",
   "main": "lib/index.js",
   "browser": "lib/index.js",
@@ -10,6 +10,7 @@
   "scripts": {
     "postinstall": "node lib/init.js",
     "start": "better-npm-run start",
+    "dev": "node lib/devServer.js",
     "clean": "./node_modules/.bin/rimraf lib",
     "build": "./node_modules/.bin/babel script --out-dir lib",
     "prepublish": "npm run clean && npm run build"
