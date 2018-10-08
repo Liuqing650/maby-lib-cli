@@ -6,7 +6,8 @@ const through2 = require('through2');
 const webpack = require('webpack');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-const transformLess = require('./script/transformLess');
+const transformLess = require('./lib/transformLess');
+const createWebpackConfig = require('./webpack.config.js');
 
 const cwd = process.cwd();
 
@@ -26,7 +27,6 @@ function buildWebpack(isMini = false) {
   if (!isMini) {
     rimraf.sync(distDir);
   }
-  const createWebpackConfig = require(path.join(cwd, 'webpack.config.js'));
   const webpackConfig = createWebpackConfig(process.env);
   webpack(webpackConfig, (err) => {
     if (err) {
@@ -42,7 +42,6 @@ function buildWebpack(isMini = false) {
 function analyzer() {
   process.env.ANALYZER = true;
   process.env.NODE_ENV = 'production';
-  const createWebpackConfig = require(path.join(cwd, 'webpack.config.js'));
   const webpackConfig = createWebpackConfig(process.env);
   webpack(webpackConfig, (err) => {
     if (err) {

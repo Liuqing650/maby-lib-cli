@@ -3,6 +3,18 @@ const vfs = require('vinyl-fs');
 const through = require('through2');
 const chalk = require('chalk');
 
+function addPackageCommand(pgc, projectPath) {
+  if (!pgc.scripts) {
+    pgc.scripts = {};
+  }
+  pgc.scripts = Object.assign(pgc.scripts, {
+    start: 'maby-lib start',
+    build: 'maby-lib build',
+    init: 'maby-lib init',
+  });
+  writeFile(pathJoin(projectDir, 'package.json'), JSON.stringify(pgc, null, 2));
+}
+
 module.exports = (projectPath) => {
   const cwd = path.join(__dirname, '../template');
   process.chdir(projectPath);
@@ -19,4 +31,12 @@ module.exports = (projectPath) => {
       console.log(chalk.green('init success!\n'));
     })
     .resume();
+
+  const pgc = require(path.join(projectPath, 'package.json'));
+  if (!pgc) {
+    process.exit(1);
+  } else {
+    addPackageCommand(pgc, projectPath);
+    console.log(chalk.green('init command success!\n'));
+  }
 };

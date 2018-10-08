@@ -12,7 +12,7 @@ program
   .command('start')
   .description('start libary.')
   .action(() => {
-    require('../script/devServer')();
+    require('../lib/devServer')();
   });
 
 program
@@ -20,7 +20,7 @@ program
   .description('init your project.')
   .action(() => {
     const projectPath = path.join(process.cwd());
-    const init = require('../script/init');
+    const init = require('../lib/init');
     init(projectPath);
   });
 

@@ -1,5 +1,5 @@
 const path = require('path');
-const createWebpackConfig = require('./script/createWebpackConfig');
+const createWebpackConfig = require('./lib/createWebpackConfig');
 
 module.exports = function(env = process.env) {
   const { webpackPlugins, webpackLoaders, outFileName, entryName, libraryName, library } = createWebpackConfig(env);
