@@ -9,7 +9,6 @@
   },
   "scripts": {
     "start": "better-npm-run start",
-    "publish": "gulp publish",
     "postinstall": "node ./script/init.js"
   },
   "betterScripts": {
