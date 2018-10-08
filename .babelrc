@@ -4,6 +4,7 @@
     "react",
     "stage-0"
   ],
+  "comments": false,
   "plugins": [
     "transform-runtime",
     "transform-decorators-legacy",

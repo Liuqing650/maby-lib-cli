@@ -7,7 +7,7 @@ module.exports = function(env = process.env) {
   const isDev = nodeEnv !== 'production';
   const ASSET_PATH = env.ASSET_PATH || '/';
   
-  console.log(isDev ? `开发模式: ${libraryName}` : `发布模式: ${libraryName}${env.MINI ? '.min' : ''}`);
+  console.log(isDev ? `开发模式: ${libraryName}` : `发布模式: ${libraryName}${env.MINI === 'true' ? '.min' : ''}`);
   // 环境
   const PORT_ENV = env.PORT || 10123;
   return {
