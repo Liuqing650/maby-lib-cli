@@ -11,7 +11,6 @@ module.exports = () => {
   const devServerOptions = {
     contentBase: path.join(process.cwd(), 'dist'),
     overlay: true,
-    hot: true,
     headers: {
       'access-control-allow-origin': '*',
     },
@@ -25,10 +24,11 @@ module.exports = () => {
   WebpackDevServer.addDevServerEntrypoints(compiler, devServerOptions);
   const devServer = new WebpackDevServer(compiler, devServerOptions);
   devServer.listen(PORT, HOST, err => {
+    const url = `http://${HOST}:${PORT}`;
     if (err) {
       console.log(err);
       return;
     }
-    console.log(chalk.cyan('\nStarting the development server...\n'));
+    console.log(chalk.cyan(`\nOpen ${url} in a browser to view the app.\n`));
   });
 };

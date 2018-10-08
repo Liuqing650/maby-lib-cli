@@ -12,9 +12,18 @@ function addPackageCommand(pgc, projectPath) {
     build: 'maby-lib build',
     init: 'maby-lib init',
   });
-  writeFile(pathJoin(projectDir, 'package.json'), JSON.stringify(pgc, null, 2));
+  writeFile(path.join(projectDir, 'package.json'), JSON.stringify(pgc, null, 2));
 }
 
+function initCommand() {
+  const pgc = require(path.join(process.cwd(), 'package.json'));
+  if (!pgc) {
+    process.exit(1);
+  } else {
+    addPackageCommand(pgc, process.cwd());
+    console.log(chalk.green('init command success!\n'));
+  }
+}
 module.exports = (projectPath) => {
   const cwd = path.join(__dirname, '../template');
   process.chdir(projectPath);
@@ -29,14 +38,7 @@ module.exports = (projectPath) => {
     .pipe(vfs.dest(projectPath))
     .on('end', () => {
       console.log(chalk.green('init success!\n'));
+      initCommand();
     })
     .resume();
-
-  const pgc = require(path.join(projectPath, 'package.json'));
-  if (!pgc) {
-    process.exit(1);
-  } else {
-    addPackageCommand(pgc, projectPath);
-    console.log(chalk.green('init command success!\n'));
-  }
 };
