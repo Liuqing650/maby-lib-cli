@@ -1,5 +1,6 @@
 const path = require('path');
 const vfs = require('vinyl-fs');
+const fs = require('fs');
 const through = require('through2');
 const chalk = require('chalk');
 
@@ -12,7 +13,7 @@ function addPackageCommand(pgc, projectPath) {
     build: 'maby-lib build',
     init: 'maby-lib init',
   });
-  writeFile(path.join(projectDir, 'package.json'), JSON.stringify(pgc, null, 2));
+  fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify(pgc, null, 2));
 }
 
 function initCommand() {
