@@ -54,10 +54,9 @@ function analyzer() {
   });
 }
 
-
 function babelify(js, modules) {
   let stream = js.pipe(babel({
-      presets: ['env'],
+      presets: ['env', 'react', 'stage-0'],
       plugins: ["transform-class-properties"]
     }))
     .pipe(through2.obj(function z(file, encoding, next) {

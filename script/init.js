@@ -12,16 +12,17 @@ function addPackageCommand(pgc, projectPath) {
     start: 'maby-lib start',
     build: 'maby-lib build',
     init: 'maby-lib init',
+    analyzer: 'maby-lib analyzer',
   });
   fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pgc, null, 2));
 }
 
-function initCommand() {
-  const pgc = require(path.join(process.cwd(), 'package.json'));
+function initCommand(projectPath) {
+  const pgc = require(path.join(projectPath, 'package.json'));
   if (!pgc) {
     process.exit(1);
   } else {
-    addPackageCommand(pgc, process.cwd());
+    addPackageCommand(pgc, projectPath);
     console.log(chalk.green('init command success!\n'));
   }
 }
@@ -38,8 +39,8 @@ module.exports = (projectPath) => {
     }))
     .pipe(vfs.dest(projectPath))
     .on('end', () => {
-      console.log(chalk.green('init success!\n'));
-      initCommand();
+      console.log(chalk.green('init success!'));
+      initCommand(projectPath);
     })
     .resume();
 };

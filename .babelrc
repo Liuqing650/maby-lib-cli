@@ -1,10 +1,9 @@
 {
   "presets": [
-    "es2015",
+    "env",
     "react",
     "stage-0"
   ],
-  "comments": false,
   "plugins": [
     "transform-runtime",
     "transform-decorators-legacy",

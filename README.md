@@ -24,6 +24,8 @@ yarn
 
 **初始化项目**
 
+> 在安装项目时会默认执行一次初始化项目命令
+
 ```bash
 maby-lib init
 ```
@@ -41,6 +43,81 @@ maby-lib build
 ```
 
 > 在 `package.json` 中配置好各个启动命令即可
+
+## 更多配置
+
+支持多种方式定义配置文件
+- 在 `package.json` 中可以自定义配置项目
+
+```json
+{
+  "name": "your lib",
+  ...
+  "mabycli": {
+    "primary-color": "#fa8c16",
+    "stylelint": true,
+    "eslint": true,
+    "vendors": [
+      "react",
+      "react-dom"
+    ]
+  }
+}
+```
+
+- 在 `mabycli.js` 文件下自定义 `mabycli` 中的配置项
+
+> 需在 `package.json` 中指明访问路径
+
+```json
+{
+  "name": "your lib",
+  ...
+  "mabycli": "./mabycli.js"
+}
+```
+
+```js
+  const path = require('path');
+
+  // 一个方法或者一个对象
+  module.exports = () => ({
+    stylelint: true, // 是否开启 stylelint
+    openBrowser: true, // 是否启动时打开浏览器
+    eslint: true, // 是否开启 eslint
+    vendors: [ // 需要提取的公共库
+      "react",
+      "react-dom"
+    ],
+    devServerOptions: { // webpack-dev-server 的配置项
+      contentBase: path.join(process.cwd(), 'dist'),
+      overlay: true,
+      headers: {
+        'access-control-allow-origin': '*',
+      },
+      open: true,
+      port: 3300,
+      stats: {
+        modules: false,
+        colors: true
+      }
+    }
+  });
+```
+
+- 在 `.mabycli` 文件下自定义 `mabycli` 中的配置项
+
+```json
+{
+  "primary-color": "#fa8c16",
+  "stylelint": true,
+  "eslint": true,
+  "vendors": [
+    "react",
+    "react-dom"
+  ]
+}
+```
 
 ## 目录结构
 

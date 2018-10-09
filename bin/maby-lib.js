@@ -24,6 +24,14 @@ program
     init(projectPath);
   });
 
+program
+  .command('analyzer')
+  .description('analyzer your libary.');
+
+program
+  .command('build')
+  .description('build your libary.');
+
 program.parse(process.argv);
 const task = program.args[0];
 if (!task) {

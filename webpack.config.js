@@ -1,4 +1,5 @@
 const path = require('path');
+const chalk = require('chalk');
 const createWebpackConfig = require('./lib/createWebpackConfig');
 
 module.exports = function(env = process.env) {
@@ -7,7 +8,7 @@ module.exports = function(env = process.env) {
   const isDev = nodeEnv !== 'production';
   const ASSET_PATH = env.ASSET_PATH || '/';
   
-  console.log(isDev ? `开发模式: ${libraryName}` : `发布模式: ${libraryName}${env.MINI === 'true' ? '.min' : ''}`);
+  console.log(chalk.cyanBright(isDev ? `development: ${libraryName} is starting...` : `production: ${libraryName}${env.MINI === 'true' ? '.min' : ''} is building.`));
   // 环境
   const PORT_ENV = env.PORT || 10123;
   return {
