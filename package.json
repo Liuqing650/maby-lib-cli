@@ -1,6 +1,6 @@
 {
   "name": "maby-lib-cli",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "快速搭建 library 的基础环境.",
   "main": "lib/index.js",
   "browser": "lib/index.js",

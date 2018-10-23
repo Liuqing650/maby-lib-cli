@@ -6,4 +6,4 @@ function resolveProject(relativePath) {
   return path.resolve(realpathSync(process.cwd()), relativePath);
 }
 const projectPath = resolveProject('../../');
-init(projectPath);
+init(projectPath, true);

@@ -1,10 +1,11 @@
 # maby-lib-cli
 
-[![NPM](https://nodei.co/npm/maby-lib-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/maby-lib-cli/)
-
 ## 简介
 
 用于快速搭建 library 的基础环境，使用 babel 进行编译， webpack 进行打包。
+
+
+[![NPM](https://nodei.co/npm/maby-lib-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/maby-lib-cli/)
 
 ``` bash
 npm i maby-lib-cli --save-dev
@@ -25,6 +26,7 @@ yarn
 **初始化项目**
 
 > 在安装项目时会默认执行一次初始化项目命令
+> v1.0.0 版本只初始化 `package.json` 下的执行命令， 可手动执行 `npm run init` 初始化项目
 
 ```bash
 maby-lib init

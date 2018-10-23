@@ -26,7 +26,12 @@ function initCommand(projectPath) {
     console.log(chalk.green('init command success!\n'));
   }
 }
-module.exports = (projectPath) => {
+module.exports = (projectPath, isInstall) => {
+  // 首次安装只初始化命令，项目可自定义初始化
+  if (isInstall) {
+    initCommand(projectPath);
+    return;
+  }
   const cwd = path.join(__dirname, '../template');
   process.chdir(projectPath);
   vfs.src(['**/*', '!node_modules/**/*'], {cwd, cwdbase: true, dot: true})
