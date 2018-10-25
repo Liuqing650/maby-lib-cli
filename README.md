@@ -4,7 +4,6 @@
 
 用于快速搭建 library 的基础环境，使用 babel 进行编译， webpack 进行打包。
 
-
 [![NPM](https://nodei.co/npm/maby-lib-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/maby-lib-cli/)
 
 ``` bash
@@ -126,6 +125,10 @@ maby-lib preview
   ]
 }
 ```
+
+版本变法说明
+
+[发布日志](https://github.com/Liuqing650/maby-lib-cli/blob/master/CHANGELOG.md)
 
 ## 目录结构
 

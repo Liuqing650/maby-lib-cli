@@ -9,7 +9,7 @@ const pkgPath = path.resolve(process.cwd(), 'package.json');
 const mabycliPath = path.resolve(process.cwd(), configFile);
 const pkg = fs.existsSync(pkgPath) ? require(pkgPath) : {};
 const libraryName = pkg.name || 'maybe-lib';
-const version = pkg.version.toLocaleLowerCase() || '';
+const version = pkg.version || '';
 let _mabycli = {};
 
 if (pkg.mabycli && typeof pkg.mabycli === 'string') {
