@@ -1,6 +1,6 @@
 {
   "name": "maby-lib-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "快速搭建 library 的基础环境.",
   "main": "lib/index.js",
   "browser": "lib/index.js",
@@ -16,6 +16,7 @@
     "clean": "./node_modules/.bin/rimraf lib",
     "build": "./node_modules/.bin/babel script --out-dir lib",
     "gulp": "npm run prepublish && gulp",
+    "preview": "npm run prepublish && gulp preview",
     "postinstall": "node lib/install.js",
     "prepublish": "npm run clean && npm run build"
   },

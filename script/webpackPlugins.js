@@ -16,17 +16,27 @@ const webpackPlugins = ({
   ExtractTextPluginConfig,
   isExistClean,
   isAutoDll,
-  nodeEnv,
-  isDev,
-  isMINI,
-  ASSET_PATH,
-  ANALYZER
+  options,
+  // nodeEnv,
+  // isDev,
+  // isMINI,
+  // ASSET_PATH,
+  // ANALYZER
 }) => {
+  // options: {
+  //   nodeEnv,
+  //   isDev,
+  //   isMINI,
+  //   assetPath: ASSET_PATH,
+  //   analyzer: ANALYZER,
+  //   preview: PREVIEW
+  // }
+  const {nodeEnv, isDev, isMINI, assetPath, analyzer, preview} = options;
   const plugins = [
     new ExtractTextPlugin(ExtractTextPluginConfig),
     new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
     new webpack.DefinePlugin({
-      'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+      'process.env.ASSET_PATH': JSON.stringify(assetPath),
       __DEV__: isDev,
     }),
     new webpack.NoEmitOnErrorsPlugin()
@@ -71,6 +81,21 @@ const webpackPlugins = ({
         canPrint: true
       })
     );
+  } else if (preview) {
+    plugins.push(
+      new HtmlWebpackPlugin({
+        title: libraryName,
+        template: path.join(process.cwd(), '/example/index.ejs')
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: Infinity
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'manifest'
+      }),
+      new webpack.NamedModulesPlugin()
+    );
   }
   if (isAutoDll) {
     plugins.push(new AutoDllPlugin({
@@ -82,7 +107,7 @@ const webpackPlugins = ({
       }
     }));
   }
-  if (ANALYZER) {
+  if (analyzer) {
     plugins.push(new BundleAnalyzerPlugin());
   }
   return plugins;

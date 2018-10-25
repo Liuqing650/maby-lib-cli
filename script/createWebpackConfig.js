@@ -14,8 +14,9 @@ module.exports = function(env) {
   const nodeEnv = env.NODE_ENV || 'development';
   const isMINI = env.MINI === 'true';
   const isDev = nodeEnv !== 'production';
-  const ASSET_PATH = env.ASSET_PATH || '/';
+  const PREVIEW = env.PREVIEW === 'true';
   const ANALYZER = env.ANALYZER || false;
+  const ASSET_PATH = env.ASSET_PATH || '/';
 
   const library = hyphenToHump(libraryName);
   // 获取入口文件
@@ -23,6 +24,9 @@ module.exports = function(env) {
     isDev,
     libraryName,
     vendors: mabycli.vendors || '',
+    options: {
+      preview: PREVIEW
+    }
   });
 
   // 获取输出文件
@@ -31,7 +35,10 @@ module.exports = function(env) {
     isDev,
     isMINI,
     version,
-    libraryName
+    libraryName,
+    options: {
+      preview: PREVIEW
+    }
   });
 
   // 获取插件
@@ -55,11 +62,14 @@ module.exports = function(env) {
     ExtractTextPluginConfig,
     isExistClean,
     isAutoDll: mabycli.isAutoDll || false,
-    nodeEnv,
-    isDev,
-    isMINI,
-    ASSET_PATH,
-    ANALYZER
+    options: {
+      nodeEnv,
+      isDev,
+      isMINI,
+      assetPath: ASSET_PATH,
+      analyzer: ANALYZER,
+      preview: PREVIEW
+    }
   });
 
   // 获取loaders

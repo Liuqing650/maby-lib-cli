@@ -1,0 +1,28 @@
+.test {
+  color: #02b3e9;
+}
+div {
+  background: #FF6550;
+  color: greenyellow;
+}
+div i {
+  font-size: 50px;
+  -webkit-animation: moveText 1s normal;
+          animation: moveText 1s normal;
+}
+@-webkit-keyframes moveText {
+  from {
+    font-size: 30px;
+  }
+  to {
+    font-size: 50px;
+  }
+}
+@keyframes moveText {
+  from {
+    font-size: 30px;
+  }
+  to {
+    font-size: 50px;
+  }
+}

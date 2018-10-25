@@ -44,6 +44,12 @@ maby-lib start
 maby-lib build
 ```
 
+**预览**
+
+```bash
+maby-lib preview
+```
+
 > 在 `package.json` 中配置好各个启动命令即可
 
 ## 更多配置

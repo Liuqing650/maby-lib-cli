@@ -8,5 +8,5 @@ src/assets/
 script/getPackage.js
 script/handleLibaryName.js
 webpack.config.js
-treer.js
 gulpfile.js
+preview/

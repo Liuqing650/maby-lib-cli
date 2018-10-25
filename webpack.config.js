@@ -7,6 +7,8 @@ module.exports = function(env = process.env) {
   const nodeEnv = env.NODE_ENV || 'development';
   const isDev = nodeEnv !== 'production';
   const ASSET_PATH = env.ASSET_PATH || '/';
+  const PREVIEW = env.PREVIEW === 'true';
+  const outputPath = PREVIEW ? path.join(process.cwd(), 'preview') : path.join(process.cwd(), 'dist');
   
   console.log(chalk.cyanBright(isDev ? `development: ${libraryName} is starting...` : `production: ${libraryName}${env.MINI === 'true' ? '.min' : ''} is building.`));
   // 环境
@@ -20,7 +22,7 @@ module.exports = function(env = process.env) {
     entry: entryName,
     devtool: isDev ? 'inline-source-map' : false,
     output: {
-      path: path.join(process.cwd(), 'dist'),
+      path: outputPath,
       publicPath: ASSET_PATH,
       filename: outFileName,
       pathinfo: isDev,

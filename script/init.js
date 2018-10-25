@@ -12,6 +12,7 @@ function addPackageCommand(pgc, projectPath) {
     start: 'maby-lib start',
     build: 'maby-lib build',
     init: 'maby-lib init',
+    preview: 'maby-lib preview',
     analyzer: 'maby-lib analyzer',
   });
   fs.writeFileSync(path.join(projectPath, 'package.json'), JSON.stringify(pgc, null, 2));

@@ -13,6 +13,7 @@ const cwd = process.cwd();
 
 const libDir = path.join(cwd, 'lib');
 const distDir = path.join(cwd, 'dist');
+const previewDir = path.join(cwd, 'preview');
 
 function getFolders(dir) {
   return fs.readdirSync(dir)
@@ -27,6 +28,23 @@ function buildWebpack(isMini = false) {
   if (!isMini) {
     rimraf.sync(distDir);
   }
+  const webpackConfig = createWebpackConfig(process.env);
+  webpack(webpackConfig, (err) => {
+    if (err) {
+      console.error(err.stack || err);
+      if (err.details) {
+        console.error(err.details);
+      }
+      return;
+    }
+  });
+}
+
+function preview() {
+  rimraf.sync(previewDir);
+  process.env.NODE_ENV = 'production';
+  process.env.PREVIEW = true;
+  process.env.ASSET_PATH = './';
   const webpackConfig = createWebpackConfig(process.env);
   webpack(webpackConfig, (err) => {
     if (err) {
@@ -108,6 +126,10 @@ function compile(modules) {
 
 gulp.task('analyzer', () => {
   analyzer();
+});
+
+gulp.task('preview', () => {
+  preview();
 });
 
 gulp.task('build:babel', (done) => {
