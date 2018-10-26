@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const createWebpackConfig = require('./lib/createWebpackConfig');
 
 module.exports = function(env = process.env) {
-  const { webpackPlugins, webpackLoaders, outFileName, entryName, libraryName, library } = createWebpackConfig(env);
+  const { webpackPlugins, webpackLoaders, outFileName, entryName, libraryName, library, resolve } = createWebpackConfig(env);
   const nodeEnv = env.NODE_ENV || 'development';
   const isDev = nodeEnv !== 'production';
   const ASSET_PATH = env.ASSET_PATH || '/';
@@ -46,9 +46,6 @@ module.exports = function(env = process.env) {
     module: {
       loaders: webpackLoaders
     },
-    resolve: {
-      modules: [path.resolve(process.cwd(), 'src/'), 'node_modules'],
-      extensions: ['.js', '.jsx', '.json']
-    }
+    resolve: resolve
   }
 };

@@ -8,6 +8,7 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const transformLess = require('./lib/transformLess');
 const createWebpackConfig = require('./webpack.config.js');
+const getBabel = require('./lib/getBabel.js');
 
 const cwd = process.cwd();
 
@@ -73,10 +74,8 @@ function analyzer() {
 }
 
 function babelify(js, modules) {
-  let stream = js.pipe(babel({
-      presets: ['env', 'react', 'stage-0'],
-      plugins: ["transform-class-properties"]
-    }))
+  const babelConfig = getBabel();
+  let stream = js.pipe(babel(babelConfig))
     .pipe(through2.obj(function z(file, encoding, next) {
       this.push(file.clone());
       // 查找包含style样式文件夹，替换掉原来引入的less为css

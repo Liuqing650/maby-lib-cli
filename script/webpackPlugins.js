@@ -17,22 +17,10 @@ const webpackPlugins = ({
   isExistClean,
   isAutoDll,
   options,
-  // nodeEnv,
-  // isDev,
-  // isMINI,
-  // ASSET_PATH,
-  // ANALYZER
 }) => {
-  // options: {
-  //   nodeEnv,
-  //   isDev,
-  //   isMINI,
-  //   assetPath: ASSET_PATH,
-  //   analyzer: ANALYZER,
-  //   preview: PREVIEW
-  // }
   const {nodeEnv, isDev, isMINI, assetPath, analyzer, preview} = options;
-  const plugins = [
+  const userPlugins = options.plugins;
+  let plugins = [
     new ExtractTextPlugin(ExtractTextPluginConfig),
     new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
     new webpack.DefinePlugin({
@@ -109,6 +97,19 @@ const webpackPlugins = ({
   }
   if (analyzer) {
     plugins.push(new BundleAnalyzerPlugin());
+  }
+  if (userPlugins) {
+    if (typeof userPlugins === 'function') {
+      return userPlugins(plugins);
+    } else if (typeof userPlugins === 'object') {
+      if (Array.isArray(userPlugins)) {
+        plugins = plugins.concat(userPlugins);
+      } else if (Object.keys(userPlugins).length > 0) {
+        Object.keys(userPlugins).map((key) => {
+          plugins.push(userPlugins[key]);
+        });
+      }
+    }
   }
   return plugins;
 };

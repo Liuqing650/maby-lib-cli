@@ -1,8 +1,9 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // 获取loaders
-const webpackLoaders = (isDev, eslint) => {
-  const loaders = [
+const webpackLoaders = ({isDev, eslint, options}) => {
+  const userLoaders = options.loaders;
+  let loaders = [
     {
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
@@ -54,6 +55,19 @@ const webpackLoaders = (isDev, eslint) => {
       exclude: /node_modules/,
       loader: 'eslint-loader'
     });
+  }
+  if (userLoaders) {
+    if (typeof userLoaders === 'function') {
+      return userLoaders(loaders);
+    } else if (typeof userLoaders === 'object') {
+      if (Array.isArray(userLoaders)) {
+        loaders = loaders.concat(userLoaders);
+      } else if (Object.keys(userLoaders).length > 0) {
+        Object.keys(userLoaders).map((key) => {
+          loaders.push(userLoaders[key]);
+        });
+      }
+    }
   }
   return loaders;
 };

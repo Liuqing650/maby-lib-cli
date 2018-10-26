@@ -1,9 +1,10 @@
 const path = require('path');
 const packageInfo = require('./getPackage');
+const getEntry = require('./getEntry');
+const getOutFilename = require('./getOutFilename');
 const getPlugins = require('./webpackPlugins');
 const getLoaders = require('./webpackLoaders');
-const getOutFilename = require('./getOutFilename');
-const getEntry = require('./getEntry');
+const getResolve = require('./webpackResolve.js');
 const handleIsExists = require('./handleFileLoader');
 const handleLibaryName = require('./handleLibaryName');
 
@@ -68,7 +69,8 @@ module.exports = function(env) {
       isMINI,
       assetPath: ASSET_PATH,
       analyzer: ANALYZER,
-      preview: PREVIEW
+      preview: PREVIEW,
+      plugins: mabycli.plugins || null,
     }
   });
 
@@ -76,6 +78,12 @@ module.exports = function(env) {
   const webpackLoaders = getLoaders({
     isDev,
     eslint: mabycli.eslint || false,
+    options: {
+      loaders: mabycli.loaders || null
+    },
+  });
+  const resolve = getResolve({
+    resolve: mabycli.resolve || null
   });
   return {
     webpackPlugins,
@@ -83,6 +91,7 @@ module.exports = function(env) {
     outFileName,
     entryName,
     libraryName,
-    library
+    library,
+    resolve,
   };
 };

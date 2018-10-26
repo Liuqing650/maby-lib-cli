@@ -1,10 +1,8 @@
-# maby-lib-cli
+# your-lib
 
 ## 简介
 
-用于快速搭建 library 的基础环境，使用 babel 进行编译， webpack 进行打包。
-
-[![NPM](https://nodei.co/npm/maby-lib-cli.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/maby-lib-cli/)
+关于 `your-lib` 的简介.
 
 ## 安装
 
@@ -79,18 +77,6 @@ maby-lib preview
 }
 ```
 
-- 在 `mabycli.js` 文件下自定义 `mabycli` 中的配置项
-
-> 需在 `package.json` 中指明访问路径
-
-```json
-{
-  "name": "your lib",
-  ...
-  "mabycli": "./mabycli.js"
-}
-```
-
 ```js
   const path = require('path');
 
@@ -141,7 +127,7 @@ maby-lib preview
 }
 ```
 
-版本变化信息查看
+版本变化说明
 
 [发布日志](https://github.com/Liuqing650/maby-lib-cli/blob/master/CHANGELOG.md)
 

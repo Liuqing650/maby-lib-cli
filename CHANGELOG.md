@@ -1,6 +1,20 @@
 更新日志
 =========
 
+v2.0.0
+------
+
+优化： `webpack.config.js` 配置权限放开
+调整： 打包时内置 `babel` 将获取 `.babelrc` 中的配置信息
+
+1. 新增 `plugins`， 支持自定义配置 `webpack` 的 `plugins`， 接收数组、函数
+
+2. 新增 `loaders`， 支持自定义配置 `webpack` 的 `loaders`， 接收数组、函数
+
+3. 新增 `resolve`， 支持自定义配置 `webpack` 的 `resolve`， 接收数组、对象、函数
+
+4. 初始化项目时将新增 `README.md` 和 `.gitignore` 文件， 初始化时需谨慎
+
 v1.1.1
 ------
 
