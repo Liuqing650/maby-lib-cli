@@ -1,6 +1,13 @@
 更新日志
 =========
 
+v2.0.1
+------
+
+1. 支持 `antd` 及其主题样式修改， 具体[可以查看](https://github.com/Liuqing650/maby-lib-cli/blob/master/README.md)
+
+2. 新增 `extractTextPlugin` 配置， 支持自定义配置 `ExtractTextPlugin( my config )`
+
 v2.0.0
 ------
 

@@ -141,6 +141,117 @@ maby-lib preview
 }
 ```
 
+- 配置 `antd` 主题样式
+
+**package.json**
+
+```json
+{
+  "name": "your lib",
+  ...
+  "dependencies": {
+    "antd": "^3.11.0"
+  },
+  "mabycli": "./mabycli.js",
+  "theme": {
+    "primary-color": "#fa541c" // 设置主题样式
+  }
+}
+```
+
+**.babelrc**
+
+```json
+{
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": true
+      }
+    ]
+  ]
+}
+```
+
+**mabycli.js**
+
+```jsx
+const path = require('path');
+const fs = require('fs');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const getTheme = () => {
+  let theme = {};
+  // 获取主题颜色
+  const pkgPath = path.resolve(__dirname, './package.json');
+  const pkg = fs.existsSync(pkgPath) ? require(pkgPath) : {};
+  if (pkg.theme && typeof pkg.theme === 'string') {
+    let cfgPath = pkg.theme;
+    // relative path
+    if (cfgPath.charAt(0) === '.') {
+      cfgPath = path.resolve(__dirname, cfgPath);
+    }
+    const getThemeConfig = require(cfgPath);
+    theme = getThemeConfig();
+  } else if (pkg.theme && typeof pkg.theme === 'object') {
+    theme = pkg.theme;
+  }
+  return theme;
+};
+
+const getLoaders = (loaders) => {
+  const theme = getTheme();
+  if (!theme) {
+    return loaders;
+  }
+  // 利用 modifyVars 修改主题样式
+  const themeLoaders = {
+    test: /\.less$/,
+    include: /node_modules/,
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        'css-loader', 'postcss-loader',
+        {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+            modifyVars: theme
+          }
+        }
+      ]
+    })
+  };
+  // 修改内部loader 的 exclude
+  loaders.forEach(loader => {
+    const isLess = RegExp(loader.test).test('.less');
+    if (isLess) {
+      loader.exclude = /node_modules/;
+    }
+  });
+  loaders.push(themeLoaders);
+  return loaders;
+};
+
+// 修改 ExtractText， 修改antd主题样式时，需要设置 allChunks: true
+const getExtractTextPlugin = (ExtractText) => {
+  return {
+    filename: ExtractText.filename,
+    allChunks: true,
+  };
+};
+module.exports = () => ({
+  stylelint: true,
+  port: 10056,
+  loaders: getLoaders,
+  extractTextPlugin: getExtractTextPlugin
+});
+
+```
+
 版本变化信息查看
 
 [发布日志](https://github.com/Liuqing650/maby-lib-cli/blob/master/CHANGELOG.md)
