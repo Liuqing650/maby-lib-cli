@@ -53,14 +53,21 @@ module.exports = function(env) {
 
   const isExistClean = !isDev && !isMINI && handleIsExists(path.resolve(process.cwd(), 'dist'), [outFileName, cssFileName]);
 
-  const ExtractTextPluginConfig = {
-    filename: cssFileName,
-    disable: isDev
+  const getExtractTextPlugin = () => {
+    const extractTextPlugin = mabycli.extractTextPlugin || null;
+    const ExtractTextPluginConfig = {
+      filename: cssFileName,
+      disable: isDev
+    };
+    if (extractTextPlugin && typeof extractTextPlugin === 'function') {
+      return extractTextPlugin(ExtractTextPluginConfig);
+    }
+    return ExtractTextPluginConfig;
   };
   const webpackPlugins = getPlugins({
     libraryName,
     stylelint: mabycli.stylelint || false,
-    ExtractTextPluginConfig,
+    ExtractTextPluginConfig: getExtractTextPlugin(),
     isExistClean,
     isAutoDll: mabycli.isAutoDll || false,
     options: {
