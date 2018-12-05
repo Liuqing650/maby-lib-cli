@@ -56,9 +56,10 @@ maby-lib preview
   "name": "your lib",
   ...
   "mabycli": {
-    "primary-color": "#fa8c16",
     "stylelint": true,
     "eslint": true,
+    "dir": "publish", // 打包目录 @v2.0.2
+    "deleteFile": true, // 只删除 `publish` 路径下的文件 @v2.0.2
     "vendors": [
       "react",
       "react-dom"

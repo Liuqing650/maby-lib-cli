@@ -36,7 +36,7 @@ const webpackPlugins = ({
         template: path.join(process.cwd(), '/example/index.ejs')
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
+        name: 'vendors',
         minChunks: Infinity
       }),
       new webpack.optimize.CommonsChunkPlugin({

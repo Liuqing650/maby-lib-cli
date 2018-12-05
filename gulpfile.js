@@ -9,12 +9,17 @@ const babel = require('gulp-babel');
 const transformLess = require('./lib/transformLess');
 const createWebpackConfig = require('./webpack.config.js');
 const getBabel = require('./lib/getBabel.js');
+const packageInfo = require('./lib/getPackage.js');
 
 const cwd = process.cwd();
 
-const libDir = path.join(cwd, 'lib');
+const { mabycli } = packageInfo;
+
+const libDir = path.join(cwd, mabycli.dir || 'lib');
 const distDir = path.join(cwd, 'dist');
 const previewDir = path.join(cwd, 'preview');
+
+const deleteLibDir = mabycli.deleteFile ? `${libDir}/**/*` : libDir;
 
 function getFolders(dir) {
   return fs.readdirSync(dir)
@@ -95,7 +100,7 @@ function babelify(js, modules) {
 }
 
 function compile(modules) {
-  rimraf.sync(libDir);
+  rimraf.sync(deleteLibDir);
   const less = gulp.src(['src/**/*.less'])
     .pipe(through2.obj(function (file, encoding, next) {
       if (file.path.match(/\/style\/index\.less$/)) {
